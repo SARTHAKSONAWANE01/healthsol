@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCare Clinic - Professional Healthcare Services</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2a9d8f;
+            --secondary-color: #264653;
+            --accent-color: #e9c46a;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-color);
+        }
+        
+        .navbar {
+            background-color: var(--secondary-color);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .nav-link:hover {
+            color: white;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1579684385127-1ef15d508118');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #21867a;
+            border-color: #21867a;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .doctor-card {
+            transition: transform 0.3s;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .doctor-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        /* Login/Signup Modal */
+        .auth-modal .nav-tabs .nav-link {
+            color: var(--dark-color);
+        }
+        
+        .auth-modal .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* Dashboard */
+        .dashboard-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Appointment calendar */
+        .time-slot {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .time-slot:hover {
+            background-color: #e9f7ef;
+        }
+        
+        .time-slot.selected {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .time-slot.booked {
+            background-color: #f8d7da;
+            color: #721c24;
+            cursor: not-allowed;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .display-4 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heartbeat me-2"></i>MedCare Clinic
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#doctors">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#appointment">Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#authModal">
+                            <i class="fas fa-user me-1"></i> Login
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center" id="home">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">Your Health Is Our Priority</h1>
+            <p class="lead mb-5">Professional healthcare services with compassion and excellence</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#appointment" class="btn btn-primary btn-lg px-4">
+                    <i class="fas fa-calendar-check me-2"></i>Book Appointment
+                </a>
+                <a href="#contact" class="btn btn-outline-light btn-lg px-4">
+                    <i class="fas fa-phone-alt me-2"></i>Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features/Services Section -->
+    <section class="py-5" id="services">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Our Services</h2>
+                <p class="lead text-muted">Comprehensive healthcare solutions for you and your family</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h4>General Consultation</h4>
+                        <p>Expert medical advice and treatment for common health issues and preventive care.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Cardiology</h4>
+                        <p>Specialized care for heart conditions and cardiovascular health management.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-bone"></i>
+                        </div>
+                        <h4>Orthopedics</h4>
+                        <p>Diagnosis and treatment of musculoskeletal system disorders and injuries.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Neurology</h4>
+                        <p>Expert care for disorders of the nervous system, brain, and spinal cord.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-x-ray"></i>
+                        </div>
+                        <h4>Diagnostics</h4>
+                        <p>State-of-the-art diagnostic services including lab tests and imaging.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-procedures"></i>
+                        </div>
+                        <h4>Emergency Care</h4>
+                        <p>24/7 emergency services with immediate attention for critical conditions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section class="py-5 bg-light" id="doctors">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Our Doctors</h2>
+                <p class="lead text-muted">Meet our team of experienced healthcare professionals</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card doctor-card text-center p-4">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="rounded-circle mx-auto mb-3" width="150" height="150" alt="Doctor">
+                        <h4>Dr. Sarah Johnson</h4>
+                        <p class="text-primary">General Practitioner</p>
+                        <p>With over 15 years of experience, Dr. Johnson provides comprehensive primary care.</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-primary">View Profile</a>
+                            <a href="#appointment" class="btn btn-sm btn-primary">Book Appointment</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card doctor-card text-center p-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle mx-auto mb-3" width="150" height="150" alt="Doctor">
+                        <h4>Dr. Michael Chen</h4>
+                        <p class="text-primary">Cardiologist</p>
+                        <p>Specializing in heart health and cardiovascular diseases with cutting-edge treatments.</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-primary">View Profile</a>
+                            <a href="#appointment" class="btn btn-sm btn-primary">Book Appointment</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card doctor-card text-center p-4">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" class="rounded-circle mx-auto mb-3" width="150" height="150" alt="Doctor">
+                        <h4>Dr. Emily Rodriguez</h4>
+                        <p class="text-primary">Pediatrician</p>
+                        <p>Dedicated to children's health from infancy through adolescence.</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-primary">View Profile</a>
+                            <a href="#appointment" class="btn btn-sm btn-primary">Book Appointment</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Section -->
+    <section class="py-5" id="appointment">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="fw-bold mb-4">Book an Appointment</h2>
+                    <p class="lead mb-4">Schedule your visit with our healthcare professionals</p>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Step 1: Select Doctor</h5>
+                            <select class="form-select mb-3" id="doctorSelect">
+                                <option selected disabled>Choose a doctor</option>
+                                <option value="1">Dr. Sarah Johnson - General Practitioner</option>
+                                <option value="2">Dr. Michael Chen - Cardiologist</option>
+                                <option value="3">Dr. Emily Rodriguez - Pediatrician</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Step 2: Select Date</h5>
+                            <div class="mb-3">
+                                <label for="appointmentDate" class="form-label">Choose a date</label>
+                                <input type="date" class="form-control" id="appointmentDate" min="">
+                            </div>
+                            <div id="dateWarning" class="alert alert-warning d-none">Please select a doctor first</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4 d-none" id="timeSlotsCard">
+                        <div class="card-body">
+                            <h5 class="card-title">Step 3: Select Time</h5>
+                            <div id="timeSlotsContainer" class="d-flex flex-wrap">
+                                <!-- Time slots will be populated here by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card d-none" id="patientDetailsCard">
+                        <div class="card-body">
+                            <h5 class="card-title">Step 4: Your Details</h5>
+                            <form id="appointmentForm">
+                                <div class="mb-3">
+                                    <label for="fullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reason" class="form-label">Reason for Visit</label>
+                                    <textarea class="form-control" id="reason" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Confirm Appointment</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Appointment Summary</h5>
+                            <div id="appointmentSummary" class="text-center py-5">
+                                <i class="fas fa-calendar-alt fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Your appointment details will appear here</p>
+                            </div>
+                            <div id="appointmentDetails" class="d-none">
+                                <ul class="list-group list-group-flush mb-4">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Doctor:</span>
+                                        <span id="summaryDoctor">Dr. Sarah Johnson</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Date:</span>
+                                        <span id="summaryDate">June 15, 2023</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Time:</span>
+                                        <span id="summaryTime">10:00 AM</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Patient:</span>
+                                        <span id="summaryPatient">John Doe</span>
+                                    </li>
+                                </ul>
+                                <div class="alert alert-success d-none" id="bookingSuccess">
+                                    Your appointment has been booked successfully! A confirmation has been sent to your email.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patient Portal Section (shown after login) -->
+    <section class="py-5 bg-light d-none" id="patientPortal">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <h2 class="fw-bold mb-0">Patient Portal</h2>
+                <button class="btn btn-outline-secondary" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </button>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="dashboard-card card p-4 bg-white">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
+                                <i class="fas fa-calendar-check text-primary fa-lg"></i>
+                            </div>
+                            <h5 class="mb-0">Upcoming Appointments</h5>
+                        </div>
+                        <div id="upcomingAppointments">
+                            <div class="text-center py-3">
+                                <p class="text-muted">No upcoming appointments</p>
+                            </div>
+                        </div>
+                        <a href="#appointment" class="btn btn-sm btn-outline-primary mt-3">Book New Appointment</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="dashboard-card card p-4 bg-white">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
+                                <i class="fas fa-history text-primary fa-lg"></i>
+                            </div>
+                            <h5 class="mb-0">Medical History</h5>
+                        </div>
+                        <div id="medicalHistory">
+                            <div class="text-center py-3">
+                                <p class="text-muted">No medical history available</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary mt-3">View Full History</button>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="dashboard-card card p-4 bg-white">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
+                                <i class="fas fa-prescription text-primary fa-lg"></i>
+                            </div>
+                            <h5 class="mb-0">Prescriptions</h5>
+                        </div>
+                        <div id="prescriptions">
+                            <div class="text-center py-3">
+                                <p class="text-muted">No current prescriptions</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary mt-3">Request Refill</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctor Portal Section (shown after login) -->
+    <section class="py-5 bg-light d-none" id="doctorPortal">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <h2 class="fw-bold mb-0">Doctor Dashboard</h2>
+                <div>
+                    <button class="btn btn-outline-primary me-2" id="manageScheduleBtn">
+                        <i class="fas fa-calendar-alt me-1"></i>Manage Schedule
+                    </button>
+                    <button class="btn btn-outline-secondary" id="doctorLogoutBtn">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="dashboard-card card p-4 bg-white h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
+                                <i class="fas fa-calendar-day text-primary fa-lg"></i>
+                            </div>
+                            <h5 class="mb-0">Today's Appointments</h5>
+                        </div>
+                        <div id="todaysAppointments">
+                            <div class="text-center py-3">
+                                <p class="text-muted">No appointments scheduled for today</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="dashboard-card card p-4 bg-white h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded me-3">
+                                <i class="fas fa-user-injured text-primary fa-lg"></i>
+                            </div>
+                            <h5 class="mb-0">Patient Records</h5>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Search patients...">
+                        </div>
+                        <div id="patientRecords">
+                            <div class="text-center py-3">
+                                <p class="text-muted">Search for patient records</p>
+                            <button class="btn btn-sm btn-primary">View All Patients</button>
+                            <button class="btn btn-sm btn-outline-primary mt-2">Add New Patient</button>
+                            <button class="btn btn-sm btn-outline-primary mt-2">Upload Documents</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Schedule Management (hidden by default) -->
+            <div class="card mt-4 d-none" id="scheduleManagement">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Manage Your Schedule</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h6>Regular Weekly Availability</h6>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Available</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Breaks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="weeklySchedule">
+                                    <!-- Populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h6>Special Dates</h6>
+                        <div class="mb-3">
+                            <button class="btn btn-sm btn-outline-primary" id="addExceptionBtn">
+                                <i class="fas fa-plus me-1"></i>Add Exception
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Reason</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scheduleExceptions">
+                                    <!-- Populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end mt-4">
+                        <button class="btn btn-secondary me-2" id="cancelScheduleBtn">Cancel</button>
+                        <button class="btn btn-primary" id="saveScheduleBtn">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-4">Contact Us</h2>
+                    <p class="lead mb-4">We're here to help and answer any questions you might have.</p>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                                <i class="fas fa-map-marker-alt fa-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Address</h5>
+                                <p class="mb-0">123 Medical Drive, Healthville, HV 12345</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-primary">
+                                <i class="fas fa-phone-alt fa-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Phone</h5>
+                                <p class="mb-0">(123) 456-7890 (Main)<br>(123) 456-7891 (Emergency)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex">
+                            <div class="me-3 text-primary">
+                                <i class="fas fa-envelope fa-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Email</h5>
+                                <p class="mb-0">info@medcareclinic.com<br>support@medcareclinic.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h5 class="mb-3">Opening Hours</h5>
+                        <ul class="list-unstyled">
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span>Monday - Friday</span>
+                                <span>8:00 AM - 8:00 PM</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span>Saturday</span>
+                                <span>9:00 AM - 5:00 PM</span>
+                            </li>
+                            <li class="d-flex justify-content-between py-2">
+                                <span>Sunday</span>
+                                <span>Emergency Only</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Send Us a Message</h5>
+                            <form id="contactForm">
+                                <div class="mb-3">
+                                    <label for="contactName" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="contactName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contactEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="contactEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contactSubject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="contactSubject" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contactMessage" class="form-label">Message</label>
+                                    <textarea class="form-control" id="contactMessage" rows="5" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-white mb-4">MedCare Clinic</h5>
+                    <p>Providing compassionate and excellent healthcare services to our community since 2005.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-white mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#services" class="text-white text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="#doctors" class="text-white text-decoration-none">Doctors</a></li>
+                        <li class="mb-2"><a href="#appointment" class="text-white text-decoration-none">Appointments</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-white mb-4">Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">General Medicine</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Cardiology</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Pediatrics</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Orthopedics</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Diagnostics</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-white mb-4">Newsletter</h5>
+                    <p>Subscribe to our newsletter for health tips and clinic updates.</p>
+                    <form class="mb-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                    <p class="small">We respect your privacy. Unsubscribe at any time.</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="small mb-0">&copy; 2023 MedCare Clinic. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="small mb-0">
+                        <a href="#" class="text-white text-decoration-none">Privacy Policy</a> | 
+                        <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login/Signup Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="nav nav-tabs" id="authTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="signup-tab" data-bs-toggle="tab" href="#signup">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="doctorLogin-tab" data-bs-toggle="tab" href="#doctorLogin">Doctor Login</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content" id="authTabsContent">
+                        <div class="tab-pane fade show active" id="login">
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="loginEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+                            <div class="text-center mt-3">
+                                <a href="#" class="text-decoration-none">Forgot password?</a>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="signup">
+                            <form id="signupForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="signupFirstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="signupFirstName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="signupLastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="signupLastName" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="signupEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupPhone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="signupPhone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="signupPassword" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="signupConfirmPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                            </form>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="doctorLogin">
+                            <form id="doctorLoginForm">
+                                <div class="mb-3">
+                                    <label for="doctorLoginEmail" class="
